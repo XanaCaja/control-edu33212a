@@ -41,7 +41,9 @@ description: 通过本机上位机连接 Keysight EDU33212A、查询状态、执
 
 ## 本机执行入口
 
-- 项目：`<项目目录>`；Python：该目录 `.venv\Scripts\python.exe`。
+首次在其他电脑部署时阅读 [新电脑部署指南](references/setup.md)，其中包含 IOLS 官网安装、独立 Python 环境、真实序列号配置、上位机启动及 Skill 安装步骤。IOLS 不随仓库分发。
+
+- 项目位置优先读取本机 EDU33212A_HOME；未设置时检查当前工作目录是否包含 generator_app.py 和 generator_client.py，仍不能确定则询问用户。不要使用原作者的项目路径。Python 使用该目录 .venv\Scripts\python.exe。
 - 上位机：`generator_app.py`，也可双击 `启动上位机.bat`。启动只连接与查询，不开启输出。
 - 客户端：项目中的 `generator_client.py`。所有操作必须通过正在运行的上位机接口，不直接调用 `edu33212a.py`，不模拟点击界面，不另开 VISA 会话。
 - 核对型号 EDU33212A。实际序列号通过 EDU33212A_SERIAL 配置，必须由用户提供或从设备连接信息读取，不能猜测；USB 地址由上位机枚举。
@@ -57,11 +59,11 @@ description: 通过本机上位机连接 Keysight EDU33212A、查询状态、执
 
 ## 命令与协议
 
-在 PowerShell 中使用项目 Python：
+先将已确认的本机项目绝对路径赋给 $project（EDU33212A_HOME 已设置时可使用该值），再在 PowerShell 中使用项目 Python：
 
 ```powershell
-& '<项目目录>\.venv\Scripts\python.exe' '<项目目录>\generator_client.py' status
-& '<项目目录>\.venv\Scripts\python.exe' '<项目目录>\generator_client.py' refresh
+& (Join-Path $project '.venv\Scripts\python.exe') (Join-Path $project 'generator_client.py') status
+& (Join-Path $project '.venv\Scripts\python.exe') (Join-Path $project 'generator_client.py') refresh
 ```
 
 控制请求写入项目内的 UTF-8 JSON 文件，再用客户端 `send --file <绝对路径>`，避免 shell 引号破坏 JSON。请求只有 `action`、`parameters`，不得附加原始 SCPI 或 Python 代码。

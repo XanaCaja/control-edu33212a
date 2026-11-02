@@ -2,6 +2,8 @@
 
 Windows 桌面上位机与 Codex Skill，通过 USB / Keysight VISA 控制 EDU33212A。
 
+**首次在另一台电脑复现，请按 [新电脑部署指南](skills/control-edu33212a/references/setup.md) 操作。** 指南覆盖 IOLS 官网下载安装、USB 识别、Python 环境、实际序列号配置、双击启动、Skill 安装及只读验收；不要求沿用原电脑目录。仓库不包含 IOLS 安装包。
+
 ## 安装与启动
 
 安装 Python 3.13（64 位）和 Keysight IO Libraries Suite，确认 Connection Expert 可以识别仪器。在仓库目录执行：
@@ -21,13 +23,13 @@ $env:EDU33212A_SERIAL = '<实际仪器序列号>'
 
 ## Skill
 
-将 skills/control-edu33212a 复制到个人 Codex skills 目录。使用前在 Skill 中设置实际项目目录，或向助手提供项目位置。客户端支持 --home 参数，也可设置 EDU33212A_HOME。
+将整个 skills/control-edu33212a 文件夹（包括 references）复制到个人 Codex skills 目录。使用前设置 EDU33212A_HOME，或向助手提供实际项目位置；不要复制原电脑的目录或序列号。客户端也支持 --home 参数。具体安装命令见新电脑部署指南。
 
 Skill 通过 generator_client.py 调用正在运行的上位机。运行接口令牌、日志、状态快照和虚拟环境不包含在仓库中。
 
 ## 使用与测试
 
-参见 [上位机说明](上位机使用说明.md) 和 [Skill](skills/control-edu33212a/SKILL.md)。文档中的 <项目目录>、YOUR_DEVICE_SERIAL 均为需要自行填写的占位符。
+参见 [上位机说明](上位机使用说明.md) 和 [Skill](skills/control-edu33212a/SKILL.md)。文档中的 <项目目录>、YOUR_DEVICE_SERIAL 均为需要自行填写的占位符。基础 Skill 只负责连接、查询、单次设置及输出开关，默认 CH2/高阻，完整配置经人工确认后执行；复杂实验由上层编排。
 
 ```powershell
 .\.venv\Scripts\python.exe -m unittest test_generator_service -v
