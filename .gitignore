@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+*.py[cod]
+.cache/
+.runtime/
+logs/
+generator-status.json
+.env
+.env.*
+
+device-config.json
+
