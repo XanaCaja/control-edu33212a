@@ -1,5 +1,4 @@
 interface:
-  display_name: "EDU33212A 波形发生器控制"
-  short_description: "通过本地上位机连接并控制波形发生器，支持通道开关、基本波形和 CH2 正弦扫频"
-  default_prompt: "使用 $control-edu33212a 查询波形发生器状态，并按我的实验要求配置 CH2。"
-
+  display_name: "EDU33212A 基础连接与控制"
+  short_description: "基础连接与控制，默认 CH2 和高阻；缺失信息先询问，完整配置经人工确认后执行"
+  default_prompt: "使用 $control-edu33212a 处理我的基础控制任务，默认 CH2 和高阻；先展示完整配置，等待我确认后执行。"
